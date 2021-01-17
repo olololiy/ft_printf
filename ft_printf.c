@@ -52,13 +52,15 @@ void ft_flag_widht(char *str, va_list args, t_flags *flags)
 
 void ft_flag_dot(char *str, va_list args, t_flags *flags)
 {
-    if (flags->width == '*') {
-        flags->width = va_arg(args, int);
+    if (flags->dot == '*') {
+        flags->dot = va_arg(args, int);
         i++;
     }
-    else
-        while(ft_isdigit(str[i]))
-            flags->width = (flags->dot * 10) + (str[i++] - '0');
+    else {
+        flags->dot = 0;
+        while (ft_isdigit(str[i]))
+            flags->dot = (flags->dot * 10) + (str[i++] - '0');
+    }
 }
 
 void ft_flag_type(char *str, va_list args, t_flags *flags)
@@ -66,7 +68,7 @@ void ft_flag_type(char *str, va_list args, t_flags *flags)
     flags->type = str[i];
 }
 
-void obrabot_ochka(char *str, t_flags *flags, va_list args)
+void obrabot_ochka(char *str, t_flags *flags, va_list args)//parser
 {
     if(str[i] == '0')     //flag - 0
     {
