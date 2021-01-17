@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "lib_ft_printf.h"
+#include "./libft/libft.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <zconf.h>
 
-/*int g_result;
+int g_result;
 int i;
 
 t_flags		ft_init_flags(void)
@@ -27,6 +28,7 @@ t_flags		ft_init_flags(void)
     flags.type = 0;
     flags.width = 0;
     flags.zero = 0;
+    flags.result = 0;
     return (flags);
 }
 
@@ -38,15 +40,64 @@ static void ft_putchar(char c)
     g_result += 1;
 }
 
-int obrabot_ochka(char *str, va_list args)
+void ft_flag_widht(char *str, va_list args, t_flags *flags)
 {
+    if (flags->width == '*')
+        flags->width = va_arg(args, int);
+    else
+        while(ft_isdigit(str[i]))
+            flags->width = (flags->dot * 10) + (str[i++] - '0');
 
+}
+
+void ft_flag_dot(char *str, va_list args, t_flags *flags)
+{
+    if (flags->width == '*') {
+        flags->width = va_arg(args, int);
+        i++;
+    }
+    else
+        while(ft_isdigit(str[i]))
+            flags->width = (flags->dot * 10) + (str[i++] - '0');
+}
+
+void ft_flag_type(char *str, va_list args, t_flags *flags)
+{
+    flags->type = str[i];
+}
+
+void obrabot_ochka(char *str, t_flags *flags, va_list args)
+{
+    if(str[i] == '0')     //flag - 0
+    {
+        flags->zero = 1;//zakin flag
+        i++;
+
+    }
+    if(str[i] == '-')
+    {
+        flags->minus = 1;
+        i++;
+    }
+    if(str[i] == '*' || (str[i] >= '0' && str[i]<= '9'))     // width
+    {
+        ft_flag_widht(str, args, flags);
+    }
+    if(str[i] == '.')          // dot
+    {
+        i++;
+        ft_flag_dot(str, args, flags);
+    }
+    ft_flag_type(str, args, flags);
 }
 
 int ft_printf(const char *str, ... )
 {
-    //int i = 0;
+  //  int c_count = 0;
     va_list		args;
+    t_flags		flags;
+    char *t_str =(char *)str;
+
 
     va_start(args, str);
     while (str[i] != '\0')
@@ -56,13 +107,15 @@ int ft_printf(const char *str, ... )
             i++;
         }
         else if(str[i] == '%')
-            obrabot_ochka(str, args);
+            obrabot_ochka(t_str, &flags, args);
     }
+    return 0;
 }
-*/
+
 int main()
 {
     char *str = "huy";
-    printf("%10s", str);
-    //ft_printf("her");
+    int a = 3;
+   // printf("%  - 10.1d", a);
+    ft_printf("her%");
 }
