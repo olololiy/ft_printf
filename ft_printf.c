@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "lib_ft_printf.h"
-#include "./libft/libft.h"
+//#include "./libft/libft.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <zconf.h>
@@ -32,6 +32,16 @@ t_flags		ft_init_flags(void)
     return (flags);
 }
 
+int		ft_isdigit(int c)
+{
+    int b;
+
+    if (c >= '0' && c <= '9')
+        b = 1;
+    else
+        b = 0;
+    return (b);
+}
 
 
 static void ft_putchar(char c)
@@ -42,8 +52,10 @@ static void ft_putchar(char c)
 
 void ft_flag_widht(char *str, va_list args, t_flags *flags)
 {
-    if (flags->width == '*')
+    if (str[i] == '*') {
         flags->width = va_arg(args, int);
+        i++;
+    }
     else
         while(ft_isdigit(str[i]))
             flags->width = (flags->dot * 10) + (str[i++] - '0');
@@ -52,7 +64,7 @@ void ft_flag_widht(char *str, va_list args, t_flags *flags)
 
 void ft_flag_dot(char *str, va_list args, t_flags *flags)
 {
-    if (flags->dot == '*') {
+    if (str[i] == '*') {
         flags->dot = va_arg(args, int);
         i++;
     }
@@ -66,10 +78,26 @@ void ft_flag_dot(char *str, va_list args, t_flags *flags)
 void ft_flag_type(char *str, va_list args, t_flags *flags)
 {
     flags->type = str[i];
+    i++;
+}
+print_c(char *str, va_list args, t_flags *flags)
+{
+    if()
+    {
+
+    }
+}
+void print_type(char *str, va_list args, t_flags *flags)
+{
+    if (flags->type == 'c')
+    {
+        print_c(str, args, flags);
+    }
 }
 
 void obrabot_ochka(char *str, t_flags *flags, va_list args)//parser
 {
+
     if(str[i] == '0')     //flag - 0
     {
         flags->zero = 1;//zakin flag
@@ -93,6 +121,7 @@ void obrabot_ochka(char *str, t_flags *flags, va_list args)//parser
     ft_flag_type(str, args, flags);
 }
 
+
 int ft_printf(const char *str, ... )
 {
   //  int c_count = 0;
@@ -108,8 +137,12 @@ int ft_printf(const char *str, ... )
             ft_putchar(str[i]);
             i++;
         }
-        else if(str[i] == '%')
+        else if(str[i] == '%') {
+            i++;
+            flags = ft_init_flags();
             obrabot_ochka(t_str, &flags, args);
+            //print_type(&flags, args);
+        }
     }
     return 0;
 }
@@ -119,5 +152,5 @@ int main()
     char *str = "huy";
     int a = 3;
    // printf("%  - 10.1d", a);
-    ft_printf("her%");
+    ft_printf("her%-*.*cah", 2, 5);
 }
