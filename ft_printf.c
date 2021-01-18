@@ -80,11 +80,15 @@ void ft_flag_type(char *str, va_list args, t_flags *flags)
     flags->type = str[i];
     i++;
 }
-print_c(char *str, va_list args, t_flags *flags)
+void print_c(char *str, va_list args, t_flags *flags)
 {
-    if()
+    if(flags->width == 0 || flags->minus == 1)
     {
-
+        write(1,va_arg(args, char ), 1);
+    }
+    else
+    {
+        if
     }
 }
 void print_type(char *str, va_list args, t_flags *flags)
