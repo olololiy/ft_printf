@@ -49,6 +49,19 @@ static void ft_putchar(char c)                                       //ft_putcha
     write(1, &c, 1);
     g_result += 1;
 }
+int	ft_strlen( char *str)
+{
+    int j;
+
+    j = 0;
+    while (*str)
+    {
+        str++;
+        j++;
+    }
+    return (j);
+}
+
 
 void ft_flag_widht(const char *str, struct t_flags *flags, va_list args)           // width
 {
@@ -104,17 +117,47 @@ void print_c(const char *str, struct t_flags *flags, va_list args)              
     }
 }
 
-/*void print_str(const char *str, struct t_flags *flags, va_list args)
+void print_str(const char *str, struct t_flags *flags, va_list args)                // print str
 {
-    line_str
+    int j = 0;
+    char *t_str = va_arg(args, char *);
+    int len_str = ft_strlen(t_str);
+    if (len_str > flags->dot && flags->dot != -1)
+        len_str = flags->dot;
+
+
+    if(flags->minus == 1)
+    {
+        write(1, t_str, len_str);
+        while((flags->width-len_str) > 1)
+        {
+            write(1," ",1);
+            flags->width--;
+        }
+    }
+    else
+    {
+        while(flags->width-len_str > 1)
+        {
+            write(1," ",1);
+            flags->width--;
+        }
+        write(1, t_str, len_str);
+    }
+
 }
-*/
-void print_type(const char *str, struct t_flags *flags, va_list args)
+
+void print_type(const char *str, struct t_flags *flags, va_list args)               //print type
 {
     if (flags->type == 'c')
     {
         print_c(str, flags, args);
     }
+    if (flags->type == 's')
+    {
+        print_str(str, flags, args);
+    }
+
 }
 
 void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)//parser
@@ -137,7 +180,7 @@ void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)//parser
     if(str[i] == '.')          // dot
     {
         i++;
-        ft_flag_dot(str,flags , args);
+        ft_flag_dot(str, flags, args);
     }
     ft_flag_type(str, flags);
 }
@@ -170,9 +213,9 @@ int ft_printf(const char *str, ... )
 
 int main()
 {
-    char *str = "huy";
+    char *a_str = "huy";
     char b = ' ';
     int a = 3;
    // printf("%  - 10.1d", a);
-    ft_printf("her%*cah",2 ,'u');
+    ft_printf("her%-20.1sah", a_str);
 }
