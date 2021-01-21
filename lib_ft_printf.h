@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-typedef	struct		s_flags
+typedef	struct		t_flags
 {
     int				already_print;
     char 				type;
