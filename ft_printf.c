@@ -68,11 +68,12 @@ void ft_flag_widht(const char *str, struct t_flags *flags, va_list args)        
     if (str[i] == '*') {
         flags->width = va_arg(args, int);
         i++;
+    } else {
+        while (ft_isdigit(str[i])) {
+            flags->width = (flags->width * 10) + (str[i] - '0');
+            i++;
+        }
     }
-    else
-        while(ft_isdigit(str[i]))
-            flags->width = (flags->dot * 10) + (str[i++] - '0');
-
 }
 
 void ft_flag_dot(const char *str, struct t_flags *flags, va_list args)               //dot
@@ -100,7 +101,7 @@ void print_c(const char *str, struct t_flags *flags, va_list args)              
     if(flags->minus == 1)
     {
         write(1, &a, 1);
-        while(flags->width != 1)
+        while(flags->width > 1)
         {
             write(1," ",1);
             flags->width--;
@@ -108,7 +109,7 @@ void print_c(const char *str, struct t_flags *flags, va_list args)              
     }
     else
     {
-        while(flags->width != 1)
+        while(flags->width > 1)
         {
             write(1," ",1);
             flags->width--;
@@ -214,8 +215,8 @@ int ft_printf(const char *str, ... )
 int main()
 {
     char *a_str = "huy";
-    char b = ' ';
+    char b = 'r';
     int a = 3;
    // printf("%  - 10.1d", a);
-    ft_printf("her%-20.1sah", a_str);
+    ft_printf("her%13.3sah", a_str);
 }
