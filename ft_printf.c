@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <zconf.h>
+#include <stdlib.h>
 
 int g_result;
 int i;
@@ -26,7 +27,7 @@ t_flags		ft_init_flags(void)
     flags.minus = 0;
     flags.star = 0;
     flags.type = 0;
-    flags.width = 0;
+    flags.width = -1;
     flags.zero = 0;
     flags.result = 0;
     return (flags);
@@ -61,6 +62,66 @@ int	ft_strlen( char *str)
     }
     return (j);
 }
+//itoa
+static	int		countdigits(int n)
+{
+    int i;
+
+    i = 0;
+    if (n < 0)
+        i++;
+    if (n > 0)
+        n = n * (-1);
+    while (n < 0)
+    {
+        n = n / 10;
+        i++;
+    }
+    return (i);
+}
+
+static	char	*digtochar(int n, int colchar)
+{
+    char	*anumb;
+
+    if (!(anumb = malloc(sizeof(char) * (colchar + 1))))
+        return (0);
+    anumb[colchar] = '\0';
+    colchar--;
+    if (n < 0)
+    {
+        anumb[0] = '-';
+    }
+    else
+        n = n * (-1);
+    while (n)
+    {
+        anumb[colchar] = (n % 10) * (-1) + '0';
+        n = n / 10;
+        colchar--;
+    }
+    return (anumb);
+}
+
+char			*ft_itoa(int n)
+{
+    char	*anumb;
+    int		colchar;
+
+    if (n == 0)
+    {
+        anumb = malloc(sizeof(char) * (2));
+        anumb[0] = '0';
+        anumb[1] = '\0';
+        return (anumb);
+    }
+    //if (!n)
+      //  return (NULL);
+    colchar = countdigits(n);
+    anumb = digtochar(n, colchar);
+    return (anumb);
+}
+// itoa
 
 
 void ft_flag_widht(const char *str, struct t_flags *flags, va_list args)           // width
@@ -118,6 +179,11 @@ void print_c(const char *str, struct t_flags *flags, va_list args)              
     }
 }
 
+void print_d(const char *str, struct t_flags *flags, va_list args)
+{
+
+}
+
 void print_str(const char *str, struct t_flags *flags, va_list args)                // print str
 {
     int j = 0;
@@ -143,7 +209,7 @@ void print_str(const char *str, struct t_flags *flags, va_list args)            
             write(1," ",1);
             flags->width--;
         }
-        write(1, t_str, len_str);
+        write(1, t_str, len_str);                                   // сюда же можно воткнуть флаг 0
     }
 
 }
@@ -154,9 +220,13 @@ void print_type(const char *str, struct t_flags *flags, va_list args)           
     {
         print_c(str, flags, args);
     }
-    if (flags->type == 's')
+    else if (flags->type == 's')
     {
         print_str(str, flags, args);
+    }
+    else if (flags->type == 'd')
+    {
+        print_d(str, flags, args);
     }
 
 }
