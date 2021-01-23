@@ -181,6 +181,15 @@ void print_c(const char *str, struct t_flags *flags, va_list args)              
 
 void print_d(const char *str, struct t_flags *flags, va_list args)
 {
+    int j = 0;
+    int d = va_arg(args, int );
+    char *str_d = ft_itoa(d);
+    int len_d = ft_strlen(str_d);
+    if (!flags->minus && !flags->zero)
+    {
+        while (flags->width > 0 && flags->dot > 0)
+            flags->
+    }
 
 }
 
