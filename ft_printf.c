@@ -126,10 +126,12 @@ char			*ft_itoa(int n)
 
 void ft_flag_widht(const char *str, struct t_flags *flags, va_list args)           // width
 {
+    flags->width = 0;
     if (str[i] == '*') {
         flags->width = va_arg(args, int);
         i++;
-    } else {
+    }
+    else {
         while (ft_isdigit(str[i])) {
             flags->width = (flags->width * 10) + (str[i] - '0');
             i++;
@@ -139,6 +141,7 @@ void ft_flag_widht(const char *str, struct t_flags *flags, va_list args)        
 
 void ft_flag_dot(const char *str, struct t_flags *flags, va_list args)               //dot
 {
+    flags->dot = 0;
     if (str[i] == '*')
     {
         flags->dot = va_arg(args, int);
@@ -179,17 +182,45 @@ void print_c(const char *str, struct t_flags *flags, va_list args)              
     }
 }
 
-void print_d(const char *str, struct t_flags *flags, va_list args)
+void print_d(const char *str, struct t_flags *flags, va_list args)              //pprint d
 {
     int j = 0;
     int d = va_arg(args, int );
     char *str_d = ft_itoa(d);
     int len_d = ft_strlen(str_d);
-    if (!flags->minus && !flags->zero)
+    if (!flags->minus && !flags->zero)                                          // without flags
     {
-        while (flags->width > 0 && flags->dot > 0)
-            flags->
+        while (flags->width > len_d && (flags->width > flags->dot)) {
+            flags->width--;
+            write(1, " ", 1);
+        }
+        while(flags->dot > len_d)
+        {
+            flags->dot--;
+            write(1, "0", 1);
+        }
+        write(1, str_d, len_d);
     }
+    else if (flags->minus && !flags->zero)                                               // minus
+    {
+        while(flags->dot > len_d)
+        {
+            flags->dot--;
+            flags->width--;
+            write(1, "0", 1);
+        }
+        write(1, str_d, len_d);
+        while (flags->width > len_d && (flags->width > flags->dot)) {
+            flags->width--;
+            write(1, " ", 1);
+        }
+    }
+    else if (!flags->minus && flags->zero)                              // zero
+    {
+        
+    }
+    else
+        write(1, " ", 1);
 
 }
 
@@ -296,6 +327,6 @@ int main()
     char *a_str = "huy";
     char b = 'r';
     int a = 3;
-   // printf("%  - 10.1d", a);
-    ft_printf("her%13.3sah", a_str);
+   // printf("%  - 10.15d", a);
+    ft_printf("her%-10.5dah", a);
 }
