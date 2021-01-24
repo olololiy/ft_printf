@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib_ft_printf.h                                    :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/16 00:10:56 by vfurr             #+#    #+#             */
-/*   Updated: 2021/01/16 00:10:59 by vfurr            ###   ########.fr       */
+/*   Created: 2020/11/11 18:42:48 by vfurr             #+#    #+#             */
+/*   Updated: 2020/11/19 21:47:46 by vfurr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "../../includes/lib_printf.h"
 
-#include <stdio.h>
-#include <unistd.h>
-
-typedef	struct		t_flags
+int		ft_isdigit(int c)
 {
-    int				already_print;
-    char 				type;
-    int				width;
-    int				minus;
-    int				zero;
-    int				dot;
-    int				star;
-    int             result;
-}					t_flags;
+	int b;
 
-t_flags		ft_init_flags(void);
-
-#endif
+	if (c >= '0' && c <= '9')
+		b = 1;
+	else
+		b = 0;
+	return (b);
+}

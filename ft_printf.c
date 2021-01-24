@@ -9,15 +9,10 @@
 /*   Updated: 2021/01/16 00:11:15 by vfurr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "lib_ft_printf.h"
-//#include "./libft/libft.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <zconf.h>
-#include <stdlib.h>
+#include "./includes/lib_printf.h"
 
 int g_result;
-int i;
+//int flags->i;
 
 t_flags		ft_init_flags(void)
 {
@@ -30,111 +25,21 @@ t_flags		ft_init_flags(void)
     flags.width = -1;
     flags.zero = 0;
     flags.result = 0;
+	flags.i = 0;
     return (flags);
 }
-
-int		ft_isdigit(int c)                                           //isdigit
-{
-    int b;
-
-    if (c >= '0' && c <= '9')
-        b = 1;
-    else
-        b = 0;
-    return (b);
-}
-
-
-static void ft_putchar(char c)                                       //ft_putchar
-{
-    write(1, &c, 1);
-    g_result += 1;
-}
-int	ft_strlen( char *str)
-{
-    int j;
-
-    j = 0;
-    while (*str)
-    {
-        str++;
-        j++;
-    }
-    return (j);
-}
-//itoa
-static	int		countdigits(int n)
-{
-    int i;
-
-    i = 0;
-    if (n < 0)
-        i++;
-    if (n > 0)
-        n = n * (-1);
-    while (n < 0)
-    {
-        n = n / 10;
-        i++;
-    }
-    return (i);
-}
-
-static	char	*digtochar(int n, int colchar)
-{
-    char	*anumb;
-
-    if (!(anumb = malloc(sizeof(char) * (colchar + 1))))
-        return (0);
-    anumb[colchar] = '\0';
-    colchar--;
-    if (n < 0)
-    {
-        anumb[0] = '-';
-    }
-    else
-        n = n * (-1);
-    while (n)
-    {
-        anumb[colchar] = (n % 10) * (-1) + '0';
-        n = n / 10;
-        colchar--;
-    }
-    return (anumb);
-}
-
-char			*ft_itoa(int n)
-{
-    char	*anumb;
-    int		colchar;
-
-    if (n == 0)
-    {
-        anumb = malloc(sizeof(char) * (2));
-        anumb[0] = '0';
-        anumb[1] = '\0';
-        return (anumb);
-    }
-    //if (!n)
-      //  return (NULL);
-    colchar = countdigits(n);
-    anumb = digtochar(n, colchar);
-    return (anumb);
-}
-// itoa
-
 
 void ft_flag_widht(const char *str, struct t_flags *flags, va_list args)           // width
 {
     flags->width = 0;
-    if (str[i] == '*') {
+    if (str[flags->i] == '*') {
         flags->width = va_arg(args, int);
-        i++;
+        flags->i++;
     }
     else {
-        while (ft_isdigit(str[i])) {
-            flags->width = (flags->width * 10) + (str[i] - '0');
-            i++;
+        while (ft_isdigit(str[flags->i])) {
+            flags->width = (flags->width * 10) + (str[flags->i] - '0');
+            flags->i++;
         }
     }
 }
@@ -142,146 +47,37 @@ void ft_flag_widht(const char *str, struct t_flags *flags, va_list args)        
 void ft_flag_dot(const char *str, struct t_flags *flags, va_list args)               //dot
 {
     flags->dot = 0;
-    if (str[i] == '*')
+    if (str[flags->i] == '*')
     {
         flags->dot = va_arg(args, int);
-        i++;
+        flags->i++;
     }
     else {
         flags->dot = 0;
-        while (ft_isdigit(str[i]))
-            flags->dot = (flags->dot * 10) + (str[i++] - '0');
+        while (ft_isdigit(str[flags->i]))
+            flags->dot = (flags->dot * 10) + (str[flags->i++] - '0');
     }
 }
 
 void ft_flag_type(const char *str, struct t_flags *flags)                           // type
 {
-    flags->type = str[i];
-    i++;
-}
-void print_c(const char *str, struct t_flags *flags, va_list args)                   // print_c
-{
-    char a = va_arg(args, int);
-    if(flags->minus == 1)
-    {
-        write(1, &a, 1);
-        while(flags->width > 1)
-        {
-            write(1," ",1);
-            flags->width--;
-        }
-    }
-    else
-    {
-        while(flags->width > 1)
-        {
-            write(1," ",1);
-            flags->width--;
-        }
-        write(1, &a, 1);
-    }
+    flags->type = str[flags->i];
+    flags->i++;
 }
 
-void print_d(const char *str, struct t_flags *flags, va_list args)              //pprint d
-{
-    int j = 0;
-    int d = va_arg(args, int );
-    char *str_d = ft_itoa(d);
-    int len_d = ft_strlen(str_d);
-    if (!flags->minus && !flags->zero)                                          // without flags
-    {
-        while (flags->width > len_d && (flags->width > flags->dot)) {
-            flags->width--;
-            write(1, " ", 1);
-        }
-        while(flags->dot > len_d)
-        {
-            flags->dot--;
-            write(1, "0", 1);
-        }
-        write(1, str_d, len_d);
-    }
-    else if (flags->minus && !flags->zero)                                               // minus
-    {
-        while(flags->dot > len_d)
-        {
-            flags->dot--;
-            flags->width--;
-            write(1, "0", 1);
-        }
-        write(1, str_d, len_d);
-        while (flags->width > len_d && (flags->width > flags->dot)) {
-            flags->width--;
-            write(1, " ", 1);
-        }
-    }
-    else if (!flags->minus && flags->zero)                              // zero
-    {
-        while (flags->dot == -1 && flags->width>len_d)
-        {
-            flags->width--;
-            write(1, "0", 1);
-        }
-        while (flags->dot < flags->width)
-        {
-            flags->width--;
-            write(1, " ", 1);
-        }
-        while (flags->dot > len_d)
-        {
-            flags->dot--;
-            write(1, "0", 1);
-        }
-        write(1, str_d, len_d);
-    }
-    else
-        write(1, " ", 1);
-
-}
-
-void print_str(const char *str, struct t_flags *flags, va_list args)                // print str
-{
-    int j = 0;
-    char *t_str = va_arg(args, char *);
-    int len_str = ft_strlen(t_str);
-    if (len_str > flags->dot && flags->dot != -1)
-        len_str = flags->dot;
-
-
-    if(flags->minus == 1)
-    {
-        write(1, t_str, len_str);
-        while((flags->width-len_str) > 1)
-        {
-            write(1," ",1);
-            flags->width--;
-        }
-    }
-    else
-    {
-        while(flags->width-len_str > 1)
-        {
-            write(1," ",1);
-            flags->width--;
-        }
-        write(1, t_str, len_str);                                   // сюда же можно воткнуть флаг 0
-    }
-
-}
-
-void print_type(const char *str, struct t_flags *flags, va_list args)               //print type
+void print_type(/*const char *str, */struct t_flags *flags, va_list args)               //print type
 {
     if (flags->type == 'c')
     {
-        print_c(str, flags, args);
+        print_c(/*str, */flags, args);
     }
     else if (flags->type == 's')
     {
-        print_str(str, flags, args);
+        print_str(/*str, */flags, args);
     }
     else if (flags->type == 'd')
     {
-        print_d(str, flags, args);
+        print_d(/*str, */flags, args);
     }
 
 }
@@ -289,23 +85,23 @@ void print_type(const char *str, struct t_flags *flags, va_list args)           
 void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)//parser
 {
 
-    if(str[i] == '0')     //flag - 0
+    if(str[flags->i] == '0')     //flag - 0
     {
         flags->zero = 1;//zakin flag
-        i++;
+        flags->i++;
     }
-    if(str[i] == '-')
+    if(str[flags->i] == '-')
     {
         flags->minus = 1;
-        i++;
+        flags->i++;
     }
-    if(str[i] == '*' || (str[i] >= '0' && str[i]<= '9'))     // width
+    if(str[flags->i] == '*' || (str[flags->i] >= '0' && str[flags->i]<= '9'))     // width
     {
         ft_flag_widht(str, flags, args);
     }
-    if(str[i] == '.')          // dot
+    if(str[flags->i] == '.')          // dot
     {
-        i++;
+        flags->i++;
         ft_flag_dot(str, flags, args);
     }
     ft_flag_type(str, flags);
@@ -314,29 +110,26 @@ void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)//parser
 
 int ft_printf(const char *str, ... )
 {
-  //  int c_count = 0;
     va_list		args;
     t_flags		flags;
-    char *t_str =(char *)str;
-
-
+	flags = ft_init_flags();
     va_start(args, str);
-    while (str[i] != '\0')
+    while (str[flags.i] != '\0')
     {
-        if (str[i] != '%') {
-            ft_putchar(str[i]);
-            i++;
+        if (str[flags.i] != '%') {
+            ft_putchar(str[flags.i]);
+            flags.i++;
         }
-        else if(str[i] == '%') {
-            i++;
-            flags = ft_init_flags();
+        else if(str[flags.i] == '%') {
+            flags.i++;
+            //flags = ft_init_flags();
             obrabot_ochka(str, &flags, args);
-            print_type(str, &flags, args);
+            print_type(/*str, */&flags, args);
         }
     }
     return 0;
 }
-
+/*
 int main()
 {
     char *a_str = "huy";
@@ -344,4 +137,4 @@ int main()
     int a = 300;
    // printf("%  - 10.15d", a);
     ft_printf("her%010.6dah", a);
-}
+}*/
