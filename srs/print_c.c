@@ -9,10 +9,12 @@ void print_c(/*const char *str, */struct t_flags *flags, va_list args)          
 	if(flags->minus == 1)
 	{
 		write(1, &a, 1);
+		flags->result++;
 		while(flags->width > 1)
 		{
 			write(1," ",1);
 			flags->width--;
+			flags->result++;
 		}
 	}
 	else
@@ -21,7 +23,9 @@ void print_c(/*const char *str, */struct t_flags *flags, va_list args)          
 		{
 			write(1," ",1);
 			flags->width--;
+			flags->result++;
 		}
 		write(1, &a, 1);
+		flags->result++;
 	}
 }

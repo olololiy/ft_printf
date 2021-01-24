@@ -14,10 +14,12 @@ void print_str(/*const char *str, */struct t_flags *flags, va_list args)        
 	if(flags->minus == 1)
 	{
 		write(1, t_str, len_str);
+		flags->result = flags->result + len_str;
 		while((flags->width-len_str) > 1)
 		{
 			write(1," ",1);
 			flags->width--;
+			flags->result++;
 		}
 	}
 	else
@@ -26,8 +28,10 @@ void print_str(/*const char *str, */struct t_flags *flags, va_list args)        
 		{
 			write(1," ",1);
 			flags->width--;
+			flags->result++;
 		}
 		write(1, t_str, len_str);                                   // сюда же можно воткнуть флаг 0
+		flags->result = flags->result + len_str;
 	}
 
 }

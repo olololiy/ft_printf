@@ -52,8 +52,9 @@ void ft_flag_dot(const char *str, struct t_flags *flags, va_list args)          
         flags->dot = va_arg(args, int);
         flags->i++;
     }
-    else {
-        flags->dot = 0;
+    else if (ft_isdigit(str[flags->i]))
+    {
+        flags->dot = 0;//del
         while (ft_isdigit(str[flags->i]))
             flags->dot = (flags->dot * 10) + (str[flags->i++] - '0');
     }
@@ -75,11 +76,10 @@ void print_type(/*const char *str, */struct t_flags *flags, va_list args)       
     {
         print_str(/*str, */flags, args);
     }
-    else if (flags->type == 'd')
+    else if (flags->type == 'd' || flags->type == 'i')
     {
         print_d(/*str, */flags, args);
     }
-
 }
 
 void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)//parser
@@ -102,7 +102,7 @@ void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)//parser
     if(str[flags->i] == '.')          // dot
     {
         flags->i++;
-        ft_flag_dot(str, flags, args);
+        	ft_flag_dot(str, flags, args);
     }
     ft_flag_type(str, flags);
 }
@@ -119,6 +119,7 @@ int ft_printf(const char *str, ... )
         if (str[flags.i] != '%') {
             ft_putchar(str[flags.i]);
             flags.i++;
+            flags.result++;
         }
         else if(str[flags.i] == '%') {
             flags.i++;
@@ -127,7 +128,7 @@ int ft_printf(const char *str, ... )
             print_type(/*str, */&flags, args);
         }
     }
-    return 0;
+    return (flags.result);
 }
 /*
 int main()
