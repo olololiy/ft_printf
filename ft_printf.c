@@ -217,7 +217,22 @@ void print_d(const char *str, struct t_flags *flags, va_list args)              
     }
     else if (!flags->minus && flags->zero)                              // zero
     {
-        
+        while (flags->dot == -1 && flags->width>len_d)
+        {
+            flags->width--;
+            write(1, "0", 1);
+        }
+        while (flags->dot < flags->width)
+        {
+            flags->width--;
+            write(1, " ", 1);
+        }
+        while (flags->dot > len_d)
+        {
+            flags->dot--;
+            write(1, "0", 1);
+        }
+        write(1, str_d, len_d);
     }
     else
         write(1, " ", 1);
@@ -326,7 +341,7 @@ int main()
 {
     char *a_str = "huy";
     char b = 'r';
-    int a = 3;
+    int a = 300;
    // printf("%  - 10.15d", a);
-    ft_printf("her%-10.5dah", a);
+    ft_printf("her%010.6dah", a);
 }
