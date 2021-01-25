@@ -5,7 +5,9 @@
 void print_str(/*const char *str, */struct t_flags *flags, va_list args)                // print str
 {
 //    int j = 0;
-	char *t_str = va_arg(args, char *);
+	char *t_str;
+	if(!(t_str = va_arg(args, char *)))
+		t_str = "(null)";
 	int len_str = ft_strlen(t_str);
 	if (len_str > flags->dot && flags->dot != -1)
 		len_str = flags->dot;
@@ -24,7 +26,7 @@ void print_str(/*const char *str, */struct t_flags *flags, va_list args)        
 	}
 	else
 	{
-		while(flags->width-len_str > 1)
+		while(flags->width-len_str > 0)
 		{
 			write(1," ",1);
 			flags->width--;

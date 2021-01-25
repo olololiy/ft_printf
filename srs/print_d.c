@@ -11,7 +11,7 @@ void print_d(/*const char *str, */struct t_flags *flags, va_list args)          
 
 	if (d == 0 && flags->dot == 0)
 		return;
-	else if (!flags->minus && !flags->zero)                                          // without flags
+	if (!flags->minus && !flags->zero)                                          // without flags
 	{
 		while (flags->width > len_d && (flags->width > flags->dot)) {
 			flags->width--;

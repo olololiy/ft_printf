@@ -84,8 +84,7 @@ void print_type(/*const char *str, */struct t_flags *flags, va_list args)       
 
 void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)//parser
 {
-
-    if(str[flags->i] == '0')     //flag - 0
+    while(str[flags->i] == '0' && str[flags->i] == '0')     //flag - 0
     {
         flags->zero = 1;//zakin flag
         flags->i++;
