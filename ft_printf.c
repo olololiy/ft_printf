@@ -34,9 +34,21 @@ void ft_flag_widht(const char *str, struct t_flags *flags, va_list args)        
     flags->width = 0;
     if (str[flags->i] == '*') {
         flags->width = va_arg(args, int);
+        if (flags->width < 0)
+		{
+        	flags->minus = 1;
+			flags->zero = 0;
+			flags->width = flags->width * -1;
+		}
         flags->i++;
     }
     else {
+    	if((str[flags->i]) == '-')
+		{
+			flags->i++;
+			flags->minus = 1;
+			flags->zero = 0;
+		}
         while (ft_isdigit(str[flags->i])) {
             flags->width = (flags->width * 10) + (str[flags->i] - '0');
             flags->i++;
@@ -84,15 +96,16 @@ void print_type(/*const char *str, */struct t_flags *flags, va_list args)       
 
 void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)//parser
 {
-    while(str[flags->i] == '0' && str[flags->i] == '0')     //flag - 0
+    while(str[flags->i] == '0')     //flag - 0
     {
         flags->zero = 1;//zakin flag
         flags->i++;
     }
-    if(str[flags->i] == '-')
+    while(str[flags->i] == '-')
     {
         flags->minus = 1;
         flags->i++;
+		flags->zero = 0;
     }
     if(str[flags->i] == '*' || (str[flags->i] >= '0' && str[flags->i]<= '9'))     // width
     {
