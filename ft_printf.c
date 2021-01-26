@@ -19,12 +19,12 @@ t_flags		ft_init_flags(void)
     t_flags		flags;
 
     flags.dot = -1;
-    flags.minus = 0;
-    flags.star = 0;
-    flags.type = 0;
-    flags.width = -1;
-    flags.zero = 0;
-    flags.result = 0;
+	flags.minus = 0;
+	flags.star = 0;
+	flags.type = 0;
+	flags.width = -1;
+	flags.zero = 0;
+	flags.result = 0;
 	flags.i = 0;
     return (flags);
 }
@@ -78,19 +78,19 @@ void ft_flag_type(const char *str, struct t_flags *flags)                       
     flags->i++;
 }
 
-void print_type(/*const char *str, */struct t_flags *flags, va_list args)               //print type
+void print_type(struct t_flags *flags, va_list args)               //print type
 {
     if (flags->type == 'c')
     {
-        print_c(/*str, */flags, args);
+        print_c(flags, args);
     }
     else if (flags->type == 's')
     {
-        print_str(/*str, */flags, args);
+        print_str(flags, args);
     }
     else if (flags->type == 'd' || flags->type == 'i')
     {
-        print_d(/*str, */flags, args);
+        print_d(flags, args);
     }
 }
 
@@ -103,7 +103,6 @@ void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)//parser
 		flags->i++;
 		return;
 	}
-
     while(str[flags->i] == '0')     //flag - 0
     {
         flags->zero = 1;//zakin flag
@@ -150,12 +149,3 @@ int ft_printf(const char *str, ... )
     }
     return (flags.result);
 }
-/*
-int main()
-{
-    char *a_str = "huy";
-    char b = 'r';
-    int a = 300;
-   // printf("%  - 10.15d", a);
-    ft_printf("her%010.6dah", a);
-}*/

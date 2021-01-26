@@ -52,7 +52,10 @@ void print_d(/*const char *str, */struct t_flags *flags, va_list args)          
 			write(1, "0", 1);
 			flags->result++;
 		}*/
-
+		if (d < 0 && flags->dot > len_d)
+		{
+			flags->dot++;
+		}
 		while (flags->dot < flags->width && flags->width > len_d && flags->dot > -1)
 		{
 			flags->width--;
@@ -82,6 +85,14 @@ void print_d(/*const char *str, */struct t_flags *flags, va_list args)          
 
 	else if (flags->minus && !flags->zero)                                               // minus
 	{
+		if (d < 0 /*&& flags->dot > len_d*/)
+		{
+			write(1, "-", 1);
+			flags->result++;
+			str_d++;
+			len_d--;
+			flags->width--;
+		}
 		while(flags->dot > len_d)
 		{
 			flags->dot--;

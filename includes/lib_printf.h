@@ -35,13 +35,13 @@ typedef	struct		t_flags
 
 t_flags		ft_init_flags(void);
 int ft_printf(const char *str, ... );
-void print_c(/*const char *str, */struct t_flags *flags, va_list args);
-void print_str(/*const char *str, */struct t_flags *flags, va_list args);
+void print_c(struct t_flags *flags, va_list args);
+void print_str(struct t_flags *flags, va_list args);
 int	ft_strlen( char *str);
 int	ft_isdigit(int c);
 void ft_putchar(char c);
 char		*ft_itoa(int n);
-void print_d(/*const char *str, */struct t_flags *flags, va_list args);
+void print_d(struct t_flags *flags, va_list args);
 
 
 

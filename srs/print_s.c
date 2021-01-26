@@ -4,15 +4,20 @@
 #include "../includes/lib_printf.h"
 void print_str(struct t_flags *flags, va_list args)                // print str
 {
-//    int j = 0;
 	char *t_str;
-	if(!(t_str = va_arg(args, char *)))
+	int len_str;
+	if (!(t_str = va_arg(args, char *)))
+	{
 		t_str = "(null)";
-	int len_str = ft_strlen(t_str);
+		if ((flags->dot < 0 || flags->dot > 6))
+			flags->dot = 6;
+	}
+	len_str = ft_strlen(t_str);
+
 	if (len_str > flags->dot && flags->dot != -1)
 		len_str = flags->dot;
-
-
+	if ((flags->dot < 0 && flags->dot > len_str))	// я не помню нахер я это поставил
+		flags->dot = len_str;
 	if(flags->minus == 1)
 	{
 		write(1, t_str, len_str);
