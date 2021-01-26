@@ -3,7 +3,7 @@
 //
 #include "../includes/lib_printf.h"
 
-void print_c(/*const char *str, */struct t_flags *flags, va_list args)                   // print_c
+void print_c(struct t_flags *flags, va_list args)                   // print_c
 {
 	char a = va_arg(args, int);
 	if(flags->minus == 1)

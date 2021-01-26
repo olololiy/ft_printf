@@ -17,6 +17,10 @@ void print_d(/*const char *str, */struct t_flags *flags, va_list args)          
 	}
 	else if (!flags->minus && !flags->zero)                                          // without flags
 	{
+		if (d < 0 && flags->dot > len_d)
+		{
+			flags->width--;			// попытка ("%10.5d", -216);
+		}
 		while (flags->width > len_d && (flags->width > flags->dot)) {
 			flags->width--;
 			write(1, " ", 1);
@@ -68,7 +72,11 @@ void print_d(/*const char *str, */struct t_flags *flags, va_list args)          
 			flags->result++;
 			flags->width--;
 		}
-		write(1, str_d, len_d-1);
+		if (d < 0)
+		{
+			len_d--;
+		}
+		write(1, str_d, len_d);
 		flags->result = flags->result +len_d;
 	}
 

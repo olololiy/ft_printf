@@ -96,6 +96,14 @@ void print_type(/*const char *str, */struct t_flags *flags, va_list args)       
 
 void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)//parser
 {
+	if (str[flags->i] == '%')
+	{
+		write(1, "%",1);
+		flags->result++;
+		flags->i++;
+		return;
+	}
+
     while(str[flags->i] == '0')     //flag - 0
     {
         flags->zero = 1;//zakin flag
@@ -116,7 +124,8 @@ void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)//parser
         flags->i++;
         	ft_flag_dot(str, flags, args);
     }
-    ft_flag_type(str, flags);
+    if(str[flags->i])
+    	ft_flag_type(str, flags);
 }
 
 
@@ -135,9 +144,8 @@ int ft_printf(const char *str, ... )
         }
         else if(str[flags.i] == '%') {
             flags.i++;
-            //flags = ft_init_flags();
             obrabot_ochka(str, &flags, args);
-            print_type(/*str, */&flags, args);
+            print_type(&flags, args);
         }
     }
     return (flags.result);
