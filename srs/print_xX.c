@@ -1,7 +1,8 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_d.c                                          :+:      :+:    :+:   */
+/*   print_xX.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +13,7 @@
 
 #include "../includes/lib_printf.h"
 
-void	without_d(long d, char *str_d, int len_d, struct t_flags *flags)
+void	without_d(unsigned d, char *str_d, int len_d, struct t_flags *flags)
 {
 	if (d < 0 && flags->dot > len_d)
 		flags->width--;
@@ -39,7 +40,7 @@ void	without_d(long d, char *str_d, int len_d, struct t_flags *flags)
 	flags->result = flags->result + len_d;
 }
 
-void	zero_d(long int d, char *str_d, int len_d, struct t_flags *flags)
+void	zero_d(unsigned int d, char *str_d, int len_d, struct t_flags *flags)
 {
 	if (d < 0 && flags->dot > len_d)
 		flags->dot++;
@@ -68,7 +69,7 @@ void	zero_d(long int d, char *str_d, int len_d, struct t_flags *flags)
 	flags->result = flags->result + len_d;
 }
 
-void	minus_d(long int d, char *str_d, int len_d, struct t_flags *flags)
+void	minus_d(unsigned int d, char *str_d, int len_d, struct t_flags *flags)
 {
 	if (d < 0)
 	{
@@ -95,14 +96,14 @@ void	minus_d(long int d, char *str_d, int len_d, struct t_flags *flags)
 	}
 }
 
-void	print_d(struct t_flags *flags, va_list args)
+void	print_xX(struct t_flags *flags, va_list args)
 {
-	long int	d;
+	unsigned int	d;
 	char	*str_d;
 	int		len_d;
 
-	d = va_arg(args, long int);
-	str_d = ft_itoa(d);
+	d = va_arg(args, unsigned int);
+	str_d = ft_itoa(d, flags);
 	len_d = ft_strlen(str_d);
 	if (d == 0 && flags->dot == 0)
 	{

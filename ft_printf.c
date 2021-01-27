@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 #include "./includes/lib_printf.h"
 
-int g_result;
-//int flags->i;
-
 t_flags		ft_init_flags(void)
 {
     t_flags		flags;
@@ -29,104 +26,17 @@ t_flags		ft_init_flags(void)
     return (flags);
 }
 
-void ft_flag_widht(const char *str, struct t_flags *flags, va_list args)           // width
-{
-    flags->width = 0;
-    if (str[flags->i] == '*') {
-        flags->width = va_arg(args, int);
-        if (flags->width < 0)
-		{
-        	flags->minus = 1;
-			flags->zero = 0;
-			flags->width = flags->width * -1;
-		}
-        flags->i++;
-    }
-    else {
-    	if((str[flags->i]) == '-')
-		{
-			flags->i++;
-			flags->minus = 1;
-			flags->zero = 0;
-		}
-        while (ft_isdigit(str[flags->i])) {
-            flags->width = (flags->width * 10) + (str[flags->i] - '0');
-            flags->i++;
-        }
-    }
-}
-
-void ft_flag_dot(const char *str, struct t_flags *flags, va_list args)               //dot
-{
-    flags->dot = 0;
-    if (str[flags->i] == '*')
-    {
-        flags->dot = va_arg(args, int);
-        flags->i++;
-    }
-    else if (ft_isdigit(str[flags->i]))
-    {
-        flags->dot = 0;//del
-        while (ft_isdigit(str[flags->i]))
-            flags->dot = (flags->dot * 10) + (str[flags->i++] - '0');
-    }
-}
-
-void ft_flag_type(const char *str, struct t_flags *flags)                           // type
-{
-    flags->type = str[flags->i];
-    flags->i++;
-}
-
-void print_type(struct t_flags *flags, va_list args)               //print type
+void print_type(struct t_flags *flags, va_list args)
 {
     if (flags->type == 'c')
-    {
         print_c(flags, args);
-    }
     else if (flags->type == 's')
-    {
         print_str(flags, args);
-    }
-    else if (flags->type == 'd' || flags->type == 'i')
-    {
+    else if (flags->type == 'd' || flags->type == 'i' || flags->type == 'u')
         print_d(flags, args);
-    }
+	else if (flags->type == 'x' || flags->type == 'X')
+		print_xX(flags, args);
 }
-
-void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)//parser
-{
-	if (str[flags->i] == '%')
-	{
-		write(1, "%",1);
-		flags->result++;
-		flags->i++;
-		return;
-	}
-    while(str[flags->i] == '0')     //flag - 0
-    {
-        flags->zero = 1;//zakin flag
-        flags->i++;
-    }
-    while(str[flags->i] == '-')
-    {
-        flags->minus = 1;
-        flags->i++;
-		flags->zero = 0;
-    }
-    if(str[flags->i] == '*' || (str[flags->i] >= '0' && str[flags->i]<= '9'))     // width
-    {
-        ft_flag_widht(str, flags, args);
-    }
-    if(str[flags->i] == '.')          // dot
-    {
-        flags->i++;
-        	ft_flag_dot(str, flags, args);
-    }
-    if(str[flags->i])
-    	ft_flag_type(str, flags);
-}
-
 
 int ft_printf(const char *str, ... )
 {
@@ -147,5 +57,6 @@ int ft_printf(const char *str, ... )
             print_type(&flags, args);
         }
     }
+    va_end(args);
     return (flags.result);
 }

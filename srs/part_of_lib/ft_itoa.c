@@ -12,9 +12,9 @@
 
 #include "../../includes/lib_printf.h"
 
-static	int		countdigits(int n)
+static	long int		countdigits(long int n)
 {
-	int i;
+	long int i;
 
 	i = 0;
 	if (n < 0)
@@ -29,7 +29,7 @@ static	int		countdigits(int n)
 	return (i);
 }
 
-static	char	*digtochar(int n, int colchar)
+static	char	*digtochar(long int n, long int colchar)
 {
 	char	*anumb;
 
@@ -52,10 +52,10 @@ static	char	*digtochar(int n, int colchar)
 	return (anumb);
 }
 
-char			*ft_itoa(int n)
+char			*ft_itoa(long int n, struct t_flags *flags)
 {
 	char	*anumb;
-	int		colchar;
+	long int		colchar;
 
 	if (n == 0)
 	{

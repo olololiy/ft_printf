@@ -37,11 +37,13 @@ t_flags		ft_init_flags(void);
 int ft_printf(const char *str, ... );
 void print_c(struct t_flags *flags, va_list args);
 void print_str(struct t_flags *flags, va_list args);
+void	print_xX(struct t_flags *flags, va_list args);
 int	ft_strlen( char *str);
 int	ft_isdigit(int c);
 void ft_putchar(char c);
-char		*ft_itoa(int n);
+char		*ft_itoa(long int n, struct t_flags *flags);
 void print_d(struct t_flags *flags, va_list args);
+void obrabot_ochka(const char *str, struct t_flags *flags, va_list args);
 
 
 
