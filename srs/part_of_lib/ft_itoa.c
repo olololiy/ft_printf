@@ -52,7 +52,7 @@ static	char	*digtochar(long int n, long int colchar)
 	return (anumb);
 }
 
-char			*ft_itoa(long int n, struct t_flags *flags)
+char			*ft_itoa(long int n)
 {
 	char	*anumb;
 	long int		colchar;

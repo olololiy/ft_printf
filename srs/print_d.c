@@ -12,7 +12,7 @@
 
 #include "../includes/lib_printf.h"
 
-void	without_d(long d, char *str_d, int len_d, struct t_flags *flags)
+static void	without_d(long d, char *str_d, int len_d, struct t_flags *flags)
 {
 	if (d < 0 && flags->dot > len_d)
 		flags->width--;
@@ -39,7 +39,7 @@ void	without_d(long d, char *str_d, int len_d, struct t_flags *flags)
 	flags->result = flags->result + len_d;
 }
 
-void	zero_d(long int d, char *str_d, int len_d, struct t_flags *flags)
+static void	zero_d(long int d, char *str_d, int len_d, struct t_flags *flags)
 {
 	if (d < 0 && flags->dot > len_d)
 		flags->dot++;
@@ -68,7 +68,7 @@ void	zero_d(long int d, char *str_d, int len_d, struct t_flags *flags)
 	flags->result = flags->result + len_d;
 }
 
-void	minus_d(long int d, char *str_d, int len_d, struct t_flags *flags)
+static void	minus_d(long int d, char *str_d, int len_d, struct t_flags *flags)
 {
 	if (d < 0)
 	{

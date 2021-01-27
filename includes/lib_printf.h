@@ -41,7 +41,8 @@ void	print_xX(struct t_flags *flags, va_list args);
 int	ft_strlen( char *str);
 int	ft_isdigit(int c);
 void ft_putchar(char c);
-char		*ft_itoa(long int n, struct t_flags *flags);
+char		*ft_itoa(long int n);
+char			*ft_itoa_for_xX(long int n, struct t_flags *flags);
 void print_d(struct t_flags *flags, va_list args);
 void obrabot_ochka(const char *str, struct t_flags *flags, va_list args);
 

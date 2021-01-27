@@ -13,7 +13,7 @@
 
 #include "../includes/lib_printf.h"
 
-void	without_d(unsigned d, char *str_d, int len_d, struct t_flags *flags)
+static void	without_d(unsigned d, char *str_d, int len_d, struct t_flags *flags)
 {
 	if (d < 0 && flags->dot > len_d)
 		flags->width--;
@@ -40,7 +40,7 @@ void	without_d(unsigned d, char *str_d, int len_d, struct t_flags *flags)
 	flags->result = flags->result + len_d;
 }
 
-void	zero_d(unsigned int d, char *str_d, int len_d, struct t_flags *flags)
+static void	zero_d(unsigned int d, char *str_d, int len_d, struct t_flags *flags)
 {
 	if (d < 0 && flags->dot > len_d)
 		flags->dot++;
@@ -69,7 +69,7 @@ void	zero_d(unsigned int d, char *str_d, int len_d, struct t_flags *flags)
 	flags->result = flags->result + len_d;
 }
 
-void	minus_d(unsigned int d, char *str_d, int len_d, struct t_flags *flags)
+static void	minus_d(unsigned int d, char *str_d, int len_d, struct t_flags *flags)
 {
 	if (d < 0)
 	{
@@ -103,7 +103,7 @@ void	print_xX(struct t_flags *flags, va_list args)
 	int		len_d;
 
 	d = va_arg(args, unsigned int);
-	str_d = ft_itoa(d, flags);
+	str_d = ft_itoa_for_xX(d, flags);
 	len_d = ft_strlen(str_d);
 	if (d == 0 && flags->dot == 0)
 	{
