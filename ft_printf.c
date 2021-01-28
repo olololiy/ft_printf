@@ -32,10 +32,18 @@ void print_type(struct t_flags *flags, va_list args)
         print_c(flags, args);
     else if (flags->type == 's')
         print_str(flags, args);
-    else if (flags->type == 'd' || flags->type == 'i' || flags->type == 'u')
+    else if (flags->type == 'i')
         print_d(flags, args);
+	else if (flags->type == 'u')
+		print_u(flags, args);
+	else if (flags->type == 'd')
+		print_dd(flags, args);
 	else if (flags->type == 'x' || flags->type == 'X')
 		print_xX(flags, args);
+	else if (flags->type == 'p')
+		print_p(flags, args);
+	else if (flags->type == '%')
+		print_prec(flags);
 }
 
 int ft_printf(const char *str, ... )
@@ -51,7 +59,8 @@ int ft_printf(const char *str, ... )
             flags.i++;
             flags.result++;
         }
-        else if(str[flags.i] == '%') {
+        else if(str[flags.i] == '%')
+        {
             flags.i++;
             obrabot_ochka(str, &flags, args);
             print_type(&flags, args);
