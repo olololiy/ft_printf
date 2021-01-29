@@ -64,12 +64,14 @@ static void	minus_d(unsigned int d, char *str_d, int len_d, struct t_flags *flag
 
 void	print_p(struct t_flags *flags, va_list args)
 {
-	unsigned int	d;
+	unsigned long int	d;
 	char	*str_d;
 	int		len_d;
 
-	d = va_arg(args, unsigned int);
-	str_d = ft_itoa_for_p(d, flags);
+	d = va_arg(args, unsigned long int);
+	str_d = ft_itoa_for_p(d);
+	//printf("%u", d);
+	//write(1, "\n", 1);
 	len_d = ft_strlen(str_d);
 	if (d == 0 && flags->dot == 0)
 	{

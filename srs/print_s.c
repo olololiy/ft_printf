@@ -14,7 +14,7 @@ void print_str(struct t_flags *flags, va_list args)                // print str
 	}
 	len_str = ft_strlen(t_str);
 
-	if (len_str > flags->dot && flags->dot != -1)
+	if (len_str > flags->dot && flags->dot >= 0)
 		len_str = flags->dot;
 	if ((flags->dot < 0 && flags->dot > len_str))	// я не помню нахер я это поставил
 		flags->dot = len_str;

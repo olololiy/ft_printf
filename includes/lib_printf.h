@@ -48,7 +48,7 @@ char			*ft_itoa_for_xX(unsigned int n, struct t_flags *flags);
 
 void obrabot_ochka(const char *str, struct t_flags *flags, va_list args);
 char			*ft_itoa_dd(int n);
-char			*ft_itoa_for_p(unsigned int n, struct t_flags *flags);
+char			*ft_itoa_for_p(unsigned long int n);
 void	print_p(struct t_flags *flags, va_list args);
 void	print_u(struct t_flags *flags, va_list args);
 char			*ft_itoa_u(unsigned int n);

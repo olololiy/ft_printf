@@ -27,16 +27,16 @@ t_flags		ft_init_flags(void)
 }
 
 void print_type(struct t_flags *flags, va_list args)
-{
+                                                                                                                                                                                                                                                                       {
     if (flags->type == 'c')
         print_c(flags, args);
     else if (flags->type == 's')
         print_str(flags, args);
-    else if (flags->type == 'i')
-        print_d(flags, args);
+    //else if (flags->type == 'i')
+    //    print_d(flags, args);
 	else if (flags->type == 'u')
 		print_u(flags, args);
-	else if (flags->type == 'd')
+	else if (flags->type == 'd' || flags->type == 'i')
 		print_dd(flags, args);
 	else if (flags->type == 'x' || flags->type == 'X')
 		print_xX(flags, args);
