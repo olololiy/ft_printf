@@ -72,6 +72,7 @@ void	print_prec(struct t_flags *flags)
 			flags->result++;
 		}
 	}
+
 	else if (!flags->minus && !flags->zero)
 		without_d(str_d, len_d, flags);
 	else if (!flags->minus && flags->zero)

@@ -1,10 +1,6 @@
-//
-// Created by Violet Furr on 1/28/21.
-//
-
 #include "../includes/lib_printf.h"
 
-static void	without_d(unsigned d, char *str_d, int len_d, struct t_flags *flags)
+static void	without_d(unsigned long d, char *str_d, int len_d, struct t_flags *flags)
 {
 	if (d < 0 && flags->dot > len_d)
 		flags->width--;
@@ -21,15 +17,11 @@ static void	without_d(unsigned d, char *str_d, int len_d, struct t_flags *flags)
 		str_d++;
 		len_d--;
 	}
-	while (flags->dot > len_d)
-	{
-		flags->dot--;
-		write(1, "0", 1);
-		flags->result++;
-	}
 	write(1, "0x", 2);
+	if(*str_d == '0' && flags->dot == 0)
+		len_d = 0;
 	write(1, str_d, len_d);
-	flags->result = flags->result + len_d;
+	flags->result = flags->result + len_d + 2;
 }
 
 
@@ -53,7 +45,7 @@ static void	minus_d(unsigned int d, char *str_d, int len_d, struct t_flags *flag
 	}
 	write(1, "0x", 2);
 	write(1, str_d, len_d);
-	flags->result = flags->result + len_d;
+	flags->result = flags->result + len_d + 2;
 	while (flags->width - 2 > len_d && (flags->width > flags->dot))
 	{
 		flags->width--;
@@ -73,9 +65,11 @@ void	print_p(struct t_flags *flags, va_list args)
 	//printf("%u", d);
 	//write(1, "\n", 1);
 	len_d = ft_strlen(str_d);
+
 	if (d == 0 && flags->dot == 0)
 	{
-		while (flags->width-- > 0)
+		//flags->width = - 2;
+		while (flags->width-- > 2)
 		{
 			write(1, " ", 1);
 			flags->result++;

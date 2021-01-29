@@ -15,9 +15,12 @@
 
 static void	without_d(int d, char *str_d, int len_d, struct t_flags *flags)
 {
-	if (d < 0 && flags->dot > len_d)
+	int y;
+
+	if (d < 0 && flags->dot >= len_d)
 		flags->width--;
-	while (flags->width > len_d && (flags->width > flags->dot))
+	y = flags->width - flags->dot;
+	while (flags->width > len_d && /*(flags->width > flags->dot)*/ y-- > 0 )
 	{
 		flags->width--;
 		write(1, " ", 1);
@@ -42,7 +45,7 @@ static void	without_d(int d, char *str_d, int len_d, struct t_flags *flags)
 
 static void	zero_d(int d, char *str_d, int len_d, struct t_flags *flags)
 {
-	if (d < 0 && flags->dot > len_d)
+	if (d < 0 && flags->dot > len_d - 1)
 		flags->dot++;
 	while (flags->dot < flags->width && flags->width > len_d && flags->dot > -1)
 	{
