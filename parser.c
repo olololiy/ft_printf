@@ -66,8 +66,12 @@ void ft_flag_type(const char *str, struct t_flags *flags)
 }
 void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)
 {
-	//while (str[flags->i] == ' ')
-	//	flags->i++;
+	while (str[flags->i] == ' ')
+		flags->i++;
+	if (str[flags->i - 1] == ' ') {
+		write(1, " ", 1);
+		flags->result++;
+	}
 	if (str[flags->i] == '%')
 	{
 		flags->type = '%';
