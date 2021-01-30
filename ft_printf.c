@@ -9,7 +9,7 @@
 /*   Updated: 2021/01/16 00:11:15 by vfurr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "./includes/lib_printf.h"
+#include "lib_printf.h"
 
 t_flags		ft_init_flags(void)
 {
