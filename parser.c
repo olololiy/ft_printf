@@ -69,16 +69,11 @@ void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)
 	while (str[flags->i] == ' ')
 	{
 		flags->i++;
-		if (str[flags->i] != ' ')
-		{
-			write(1, " ", 1);
-			flags->result++;
-		}
+		flags->space = 1;
 	}
 	if (str[flags->i] == '%')
 	{
 		flags->type = '%';
-		//flags->result++;
 		flags->i++;
 		return;
 	}

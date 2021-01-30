@@ -38,8 +38,6 @@ static	char	*digtochar(unsigned int long n, int colchar)
 		n = n / 16;
 		colchar--;
 	}
-	//anumb[colchar] = 'x';
-	//anumb[colchar-1] = '0';
 	return (anumb);
 }
 

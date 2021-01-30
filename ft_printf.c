@@ -17,23 +17,30 @@ t_flags		ft_init_flags(void)
 
     flags.dot = -1;
 	flags.minus = 0;
-	flags.star = 0;
 	flags.type = 0;
 	flags.width = -1;
 	flags.zero = 0;
 	flags.result = 0;
 	flags.i = 0;
+	flags.space = 0;
     return (flags);
 }
 
+void		all_zero_flags(struct t_flags *flags)
+{
+	flags->dot = -1;
+	flags->minus = 0;
+	flags->type = 0;
+	flags->width = -1;
+	flags->zero = 0;
+	flags->space = 0;
+}
 void print_type(struct t_flags *flags, va_list args)
-                                                                                                                                                                                                                                                                       {
+{
     if (flags->type == 'c')
         print_c(flags, args);
     else if (flags->type == 's')
         print_str(flags, args);
-    //else if (flags->type == 'i')
-    //    print_d(flags, args);
 	else if (flags->type == 'u')
 		print_u(flags, args);
 	else if (flags->type == 'd' || flags->type == 'i')
@@ -62,6 +69,7 @@ int ft_printf(const char *str, ... )
         else if(str[flags.i] == '%')
         {
             flags.i++;
+            all_zero_flags(&flags);
             obrabot_ochka(str, &flags, args);
             print_type(&flags, args);
         }

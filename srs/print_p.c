@@ -62,17 +62,15 @@ void	print_p(struct t_flags *flags, va_list args)
 
 	d = va_arg(args, unsigned long int);
 	str_d = ft_itoa_for_p(d);
-	//printf("%u", d);
-	//write(1, "\n", 1);
 	len_d = ft_strlen(str_d);
 
-	if (d == 0 && flags->dot == 0)
+	if ((d == 0 && flags->dot == 0) || flags->space == 1)
 	{
-		//flags->width = - 2;
 		while (flags->width-- > 2)
 		{
 			write(1, " ", 1);
 			flags->result++;
+			flags->space = 0;
 		}
 	}
 	if (!flags->minus && !flags->zero)

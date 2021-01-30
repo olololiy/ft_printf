@@ -22,15 +22,14 @@
 
 typedef	struct		t_flags
 {
-    int				already_print;
     char 				type;
     int				width;
     int				minus;
     int				zero;
     int				dot;
-    int				star;
     int             result;
     int 			i;
+    int 			space;
 }					t_flags;
 
 t_flags		ft_init_flags(void);
@@ -41,13 +40,10 @@ void	print_xX(struct t_flags *flags, va_list args);
 void print_dd(/*const char *str, */struct t_flags *flags, va_list args);
 		int	ft_strlen( char *str);
 int	ft_isdigit(int c);
-void print_d(struct t_flags *flags, va_list args);
 void ft_putchar(char c);
 char		*ft_itoa(long int n);
 char			*ft_itoa_for_xX(unsigned int n, struct t_flags *flags);
-
 void obrabot_ochka(const char *str, struct t_flags *flags, va_list args);
-char			*ft_itoa_dd(int n);
 char			*ft_itoa_for_p(unsigned long int n);
 void	print_p(struct t_flags *flags, va_list args);
 void	print_u(struct t_flags *flags, va_list args);

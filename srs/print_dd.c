@@ -20,11 +20,12 @@ static void	without_d(int d, char *str_d, int len_d, struct t_flags *flags)
 	if (d < 0 && flags->dot >= len_d)
 		flags->width--;
 	y = flags->width - flags->dot;
-	while (flags->width > len_d && /*(flags->width > flags->dot)*/ y-- > 0 )
+	while ((flags->width > len_d && y-- > 0) || flags->space == 1)
 	{
 		flags->width--;
 		write(1, " ", 1);
 		flags->result++;
+		flags->space = 0;
 	}
 	if (d < 0)
 	{
@@ -108,14 +109,17 @@ void	print_dd(struct t_flags *flags, va_list args)
 	d = va_arg(args, int);
 	str_d = ft_itoa(d);
 	len_d = ft_strlen(str_d);
-	if (d == 0 && flags->dot == 0)
-	{
-		while (flags->width-- > 0)
+
+	//
+	if ((d == 0 && flags->dot == 0)) {
+		while ((flags->width-- > 0))
 		{
 			write(1, " ", 1);
 			flags->result++;
 		}
 	}
+
+//
 	else if (!flags->minus && !flags->zero)
 		without_d(d, str_d, len_d, flags);
 	else if (!flags->minus && flags->zero)
