@@ -23,7 +23,7 @@ int main()
 
 	//write(1, "\n", 1);
 
-	printf("%      -----000*i!", -19, 42);
+	printf("%      -0%");
 
 	//int a = ft_printf("%p", 0);
 	//write(1, "\n", 1);

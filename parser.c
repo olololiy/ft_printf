@@ -66,30 +66,23 @@ void ft_flag_type(const char *str, t_flags *flags)
 }
 void obrabot_ochka(const char *str, t_flags *flags, va_list args)
 {
-
-	while (str[flags->i] == ' ' )
-
+	while (str[flags->i] == ' ' || str[flags->i] == '0' || str[flags->i] == '-')
 	{
-		flags->i++;
-		flags->space = 1;
-	}
-	if (str[flags->i] == '%')
-	{
-		flags->type = '%';
-		flags->i++;
-		return;
-	}
-	while (str[flags->i] == '0')
-	{
-		flags->zero = 1;
+		if (str[flags->i] == ' ')
+			flags->space = 1;
+		if (str[flags->i] == '%')
+		{
+			flags->type = '%';
+			return;
+		}
+		if (str[flags->i] == '0')
+			flags->zero = 1;
+		if (str[flags->i] == '-')
+			flags->minus = 1;
 		flags->i++;
 	}
-	while (str[flags->i] == '-')
-	{
-		flags->minus = 1;
-		flags->i++;
+	if(flags->minus == 1)
 		flags->zero = 0;
-	}
 	if (str[flags->i] == '*' || (str[flags->i] >= '0' && str[flags->i]<= '9'))
 		ft_flag_widht(str, flags, args);
 	if (str[flags->i] == '.')
