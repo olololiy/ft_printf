@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_printf.h"
+#include "ft_printf.h"
 
 void ft_flag_widht(const char *str, struct t_flags *flags, va_list args)
 {
