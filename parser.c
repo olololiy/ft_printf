@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void ft_flag_widht(const char *str, struct t_flags *flags, va_list args)
+void ft_flag_widht(const char *str, t_flags *flags, va_list args)
 {
 	flags->width = 0;
 	if (str[flags->i] == '*')
@@ -42,7 +42,7 @@ void ft_flag_widht(const char *str, struct t_flags *flags, va_list args)
 	}
 }
 
-void ft_flag_dot(const char *str, struct t_flags *flags, va_list args)
+void ft_flag_dot(const char *str, t_flags *flags, va_list args)
 {
 	flags->i++;
 	flags->dot = 0;
@@ -59,14 +59,16 @@ void ft_flag_dot(const char *str, struct t_flags *flags, va_list args)
 	}
 }
 
-void ft_flag_type(const char *str, struct t_flags *flags)
+void ft_flag_type(const char *str, t_flags *flags)
 {
 	flags->type = str[flags->i];
 	flags->i++;
 }
-void obrabot_ochka(const char *str, struct t_flags *flags, va_list args)
+void obrabot_ochka(const char *str, t_flags *flags, va_list args)
 {
-	while (str[flags->i] == ' ')
+
+	while (str[flags->i] == ' ' )
+
 	{
 		flags->i++;
 		flags->space = 1;
