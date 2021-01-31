@@ -6,14 +6,14 @@
 /*   By: vfurr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 22:41:50 by vfurr             #+#    #+#             */
-/*   Updated: 2021/01/30 22:41:52 by vfurr            ###   ########.fr       */
+/*   Updated: 2021/01/31 18:27:19 by vfurr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ft_printf.h"
 
-static void	without_d(unsigned d, char *str_d, int len_d, t_flags *flags)
+static void	without_d(unsigned d, char *str_d, int len_d,
+		t_flags *flags)
 {
 	if (d < 0 && flags->dot > len_d)
 		flags->width--;
@@ -40,7 +40,8 @@ static void	without_d(unsigned d, char *str_d, int len_d, t_flags *flags)
 	flags->result = flags->result + len_d;
 }
 
-static void	zero_d(unsigned int d, char *str_d, int len_d, t_flags *flags)
+static void	zero_d(unsigned int d, char *str_d, int len_d,
+		t_flags *flags)
 {
 	if (d < 0 && flags->dot > len_d)
 		flags->dot++;
@@ -69,12 +70,8 @@ static void	zero_d(unsigned int d, char *str_d, int len_d, t_flags *flags)
 	flags->result = flags->result + len_d;
 }
 
-static void	minus_d(unsigned int d, char *str_d, int len_d, t_flags *flags)
+static void	minus_d(char *str_d, int len_d, t_flags *flags)
 {
-	if (d == 0)
-	{
-
-	}
 	while (flags->dot > len_d)
 	{
 		flags->dot--;
@@ -92,11 +89,11 @@ static void	minus_d(unsigned int d, char *str_d, int len_d, t_flags *flags)
 	}
 }
 
-void	print_u(t_flags *flags, va_list args)
+void		print_u(t_flags *flags, va_list args)
 {
 	unsigned int	d;
-	char	*str_d;
-	int		len_d;
+	char			*str_d;
+	int				len_d;
 
 	d = va_arg(args, unsigned int);
 	str_d = ft_itoa_u(d);
@@ -109,13 +106,13 @@ void	print_u(t_flags *flags, va_list args)
 			flags->result++;
 		}
 	}
-	if(!d && !flags->dot)
+	if (!d && !flags->dot)
 		len_d = 0;
 	if (!flags->minus && !flags->zero)
 		without_d(d, str_d, len_d, flags);
 	if (!flags->minus && flags->zero)
 		zero_d(d, str_d, len_d, flags);
 	if (flags->minus && !flags->zero)
-		minus_d(d, str_d, len_d, flags);
+		minus_d(str_d, len_d, flags);
 	free(str_d);
 }

@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_d.c                                          :+:      :+:    :+:   */
+/*   print_dd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfurr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 19:41:18 by vfurr             #+#    #+#             */
-/*   Updated: 2021/01/27 19:51:08 by vfurr            ###   ########.fr       */
+/*   Updated: 2021/01/31 17:28:53 by vfurr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ft_printf.h"
 
-static void	without_d(int d, char *str_d, int len_d, t_flags *flags)
+static void		without_d(int d, char *str_d, int len_d, t_flags *flags)
 {
-	int y;
-
 	if (d < 0 && flags->dot >= len_d)
 		flags->width--;
-	y = flags->width - flags->dot;
-	while ((flags->width > len_d && y-- > 0) || flags->space == 1)
+	while ((flags->width > len_d &&
+	flags->width - flags->dot > 0) || flags->space == 1)
 	{
 		flags->width--;
 		write(1, " ", 1);
@@ -44,7 +41,7 @@ static void	without_d(int d, char *str_d, int len_d, t_flags *flags)
 	flags->result = flags->result + len_d;
 }
 
-static void	zero_d(int d, char *str_d, int len_d, t_flags *flags)
+static void		zero_d(int d, char *str_d, int len_d, t_flags *flags)
 {
 	if (d < 0 && flags->dot > len_d - 1)
 		flags->dot++;
@@ -73,7 +70,7 @@ static void	zero_d(int d, char *str_d, int len_d, t_flags *flags)
 	flags->result = flags->result + len_d;
 }
 
-static void	minus_d(int d, char *str_d, int len_d, t_flags *flags)
+static void		minus_d(int d, char *str_d, int len_d, t_flags *flags)
 {
 	if (d < 0)
 	{
@@ -100,26 +97,23 @@ static void	minus_d(int d, char *str_d, int len_d, t_flags *flags)
 	}
 }
 
-void	print_dd(t_flags *flags, va_list args)
+void			print_dd(t_flags *flags, va_list args)
 {
-	int	d;
+	int		d;
 	char	*str_d;
 	int		len_d;
 
 	d = va_arg(args, int);
 	str_d = ft_itoa(d);
 	len_d = ft_strlen(str_d);
-
-	//
-	if ((d == 0 && flags->dot == 0)) {
+	if ((d == 0 && flags->dot == 0))
+	{
 		while ((flags->width-- > 0))
 		{
 			write(1, " ", 1);
 			flags->result++;
 		}
 	}
-
-//
 	else if (!flags->minus && !flags->zero)
 		without_d(d, str_d, len_d, flags);
 	else if (!flags->minus && flags->zero)

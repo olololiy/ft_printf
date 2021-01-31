@@ -40,7 +40,7 @@ int					ft_isdigit(int c);
 void				ft_putchar(char c);
 char				*ft_itoa(long int n);
 char				*ft_itoa_for_xx(unsigned int n, t_flags *flags);
-void				obrabot_ochka(const char *str, t_flags *flags,
+int				obrabot_ochka(const char *str, t_flags *flags,
 		va_list args);
 char				*ft_itoa_for_p(unsigned long int n);
 void				print_p(t_flags *flags, va_list args);

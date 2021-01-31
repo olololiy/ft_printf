@@ -6,13 +6,13 @@
 /*   By: vfurr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 22:41:04 by vfurr             #+#    #+#             */
-/*   Updated: 2021/01/30 22:41:10 by vfurr            ###   ########.fr       */
+/*   Updated: 2021/01/31 17:43:07 by vfurr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	without_d(char *str_d, int len_d, t_flags *flags)
+static void		without_d(char *str_d, int len_d, t_flags *flags)
 {
 	while (flags->width > len_d && (flags->width > flags->dot))
 	{
@@ -30,7 +30,7 @@ static void	without_d(char *str_d, int len_d, t_flags *flags)
 	flags->result = flags->result + len_d;
 }
 
-static void	zero_d(char *str_d, int len_d, t_flags *flags)
+static void		zero_d(char *str_d, int len_d, t_flags *flags)
 {
 	while (flags->dot < flags->width && flags->width > len_d && flags->dot > -1)
 	{
@@ -49,7 +49,7 @@ static void	zero_d(char *str_d, int len_d, t_flags *flags)
 	flags->result = flags->result + len_d;
 }
 
-static void	minus_d(char *str_d, int len_d, t_flags *flags)
+static void		minus_d(char *str_d, int len_d, t_flags *flags)
 {
 	while (flags->dot > len_d)
 	{
@@ -68,9 +68,9 @@ static void	minus_d(char *str_d, int len_d, t_flags *flags)
 	}
 }
 
-void	print_prec(t_flags *flags)
+void			print_prec(t_flags *flags)
 {
-	char	*str_d ;
+	char	*str_d;
 	int		len_d;
 
 	str_d = "%";

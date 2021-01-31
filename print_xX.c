@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_xX.c                                         :+:      :+:    :+:   */
-/*                                                    +:	+ +:+         +:+     */
+/*   print_xx.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: vfurr <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/27 19:41:18 by vfurr             #+#    #+#             */
-/*   Updated: 2021/01/27 19:51:08 by vfurr            ###   ########.fr       */
+/*   Created: 2021/01/31 19:01:12 by vfurr             #+#    #+#             */
+/*   Updated: 2021/01/31 19:02:04 by vfurr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +95,11 @@ static void	minus_d(unsigned int d, char *str_d, int len_d, t_flags *flags)
 	}
 }
 
-void	print_xx(t_flags *flags, va_list args)
+void		print_xx(t_flags *flags, va_list args)
 {
 	unsigned int	d;
-	char	*str_d;
-	int		len_d;
+	char			*str_d;
+	int				len_d;
 
 	d = va_arg(args, unsigned int);
 	str_d = ft_itoa_for_xx(d, flags);
